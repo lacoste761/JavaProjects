@@ -1,5 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,51 +6,120 @@ public class Main {
 
     public static void main(String args[])
     {
-        List<String> content = readFile("vectors.txt");
-        if(content == null)
-        {
-            System.out.println("File not found.\nCheck path to file and try again.\n");
-            return;
+        String inputFile = args[1];
+        String outputFile = args[2];
+        List<Vector> vectors;
+        try {
+            System.out.println("Reading file " + inputFile + "...");
+            vectors = FileParser.getVectorsFromFile(inputFile);
+            System.out.println("File read successful!");
         }
-        if(content.size() == 0)
+        catch (CustomException e)
         {
-            System.out.println("File is empty.\n" +
-                    "Write in file and try again.\n");
+            System.out.println(e.getMessage());
             return;
         }
 
-        try{
-            int numOfVectors = parseNum(content.get(0));
-        }
-        catch (NumberFormatException e)
-        {
-            System.out.println("First string should contains a number of vectors.\n" +
-                    "Correct a file content and try again.\n");
-            return;
-        }
-    }
+        List<String> output = new ArrayList<>();
 
-    private static List<String> readFile(String fileName)
-    {
-        String line;
-        List<String> lines = new ArrayList<>();
+        output.addAll(outVectors(vectors));
+        output.addAll(outOctahedralNorm(vectors));
+        output.addAll(outSphericalNorm(vectors));
+        output.addAll(outCubicNorm(vectors));
+        output.addAll(outScalars(vectors));
+        output.add(outSummary(vectors));
 
-        try(BufferedReader reader = new BufferedReader(new FileReader(fileName)))
-        {
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
+        printToConsole(output);
+        if(!outputFile.isEmpty())
+            try
+            {
+                FileParser.WriteToFile(outputFile, output);
             }
-        }
-        catch(IOException e)
-        {
-            return null;
-        }
+            catch (IOException e)
+            {
+                System.out.println(e.getMessage());
+            }
 
-        return lines;
+        //UnitTests.TestBusinessLogic();
     }
 
-    private static int parseNum(String firstString)
+    
+    /*==============================*/
+    /*Приватные методы вывода данных*/
+    /*==============================*/
+
+    /*Вывести данные в консоль*/
+    private static void printToConsole(List<String> output)
     {
-        return Integer.parseInt(firstString);
+        for(String string : output)
+            System.out.println(string);
+    }
+
+    /*Получить данные о векторах*/
+    private static List<String> outVectors(List<Vector> vectors)
+    {
+        List<String> output = new ArrayList<>();
+
+        output.add("\nVECTORS");
+        for(int i = 0; i < vectors.size(); i++)
+            output.add("\t[" + (i+1)+ "] = " + vectors.get(i));
+
+        return output;
+    }
+
+    /*Получить октаэдрические нормы векторов*/
+    private static List<String> outOctahedralNorm(List<Vector> vectors)
+    {
+        List<String> output = new ArrayList<>();
+
+        output.add("\nOCTAHEDRAL NORM");
+        for(int i = 0; i < vectors.size(); i++)
+            output.add("\t[" + (i+1)+ "].oct = " + vectors.get(i).octahedralNorm());
+
+        return output;
+    }
+
+    /*Получить сферические нормы векторов*/
+    private static List<String> outSphericalNorm(List<Vector> vectors)
+    {
+        List<String> output = new ArrayList<>();
+
+        output.add("\nSPHERICAL NORM");
+        for(int i = 0; i < vectors.size(); i++)
+            output.add("\t[" + (i+1)+ "].sph = " + vectors.get(i).sphericalNorm());
+
+        return output;
+    }
+
+    /*Получить кубические нормы векторов*/
+    private static List<String> outCubicNorm(List<Vector> vectors)
+    {
+        List<String> output = new ArrayList<>();
+
+        output.add("\nCUBIC NORM");
+        for(int i = 0; i < vectors.size(); i++)
+            output.add("\t[" + (i+1)+ "].cub = " + vectors.get(i).cubicNorm());
+
+        return output;
+    }
+
+    /*Получить скалярные произведения векторов*/
+    private static List<String> outScalars(List<Vector> vectors)
+    {
+        List<String> output = new ArrayList<>();
+
+        output.add("\nSCALARS");
+        for(int i = 0; i < vectors.size(); i++)
+            for(int j = i; j < vectors.size(); j++)
+                output.add("\t([" + (i+1) + "]*[" + (j+1) + "]) = "
+                        + Vector.ScalarProduct(vectors.get(i), vectors.get(j)));
+
+        return output;
+    }
+
+    /*Получить суммарный вектор*/
+    private static String outSummary(List<Vector> vectors)
+    {
+        return "\nSUMMARY VECTOR = " + Vector.summaryVector(vectors);
     }
 }
