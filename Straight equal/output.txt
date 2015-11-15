@@ -1,0 +1,33 @@
+
+STRAIGHT EQUALS
+	[1] = 1.0x - 1.0y + 2.0 = 0
+	[2] = 2.0x - 2.0y + 3.0 = 0
+	[3] = 1.0x + 0.0y - 3.0 = 0
+	[4] = 0.0x + 2.0y + 2.0 = 0
+	[5] = -2.0x + 2.0y - 4.0 = 0
+
+NORMALIZED DIRECTION VECTORS
+	[1].ndv = (0.7071067811865475,0.7071067811865475)
+	[2].ndv = (0.7071067811865475,0.7071067811865475)
+	[3].ndv = (-0.0,1.0)
+	[4].ndv = (-1.0,0.0)
+	[5].ndv = (-0.7071067811865475,-0.7071067811865475)
+
+ANGLES
+	[1].y-axis-angle = 45.0
+	[2].y-axis-angle = 45.0
+	[3].y-axis-angle = 0.0
+	[4].y-axis-angle = 90.0
+	[5].y-axis-angle = 45.0
+
+INTERSECTION POINTS
+	([1]x[2]) is parallel
+	([1]x[3]).intersect = (3.0,5.0)
+	([1]x[4]).intersect = (-3.0,-1.0)
+	([1]x[5]) is parallel
+	([2]x[3]).intersect = (3.0,4.5)
+	([2]x[4]).intersect = (-2.5,-1.0)
+	([2]x[5]) is parallel
+	([3]x[4]).intersect = (3.0,-1.0)
+	([3]x[5]).intersect = (3.0,5.0)
+	([4]x[5]).intersect = (-3.0,-1.0)

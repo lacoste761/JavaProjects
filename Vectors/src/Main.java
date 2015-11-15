@@ -6,8 +6,15 @@ public class Main {
 
     public static void main(String args[])
     {
-        String inputFile = args[1];
-        String outputFile = args[2];
+        String inputFile = args.length > 0? args[0] : null;
+        String outputFile = args.length > 1? args[1] : null;
+
+        if(inputFile != null && inputFile.equals("unit_tests"))
+        {
+            UnitTests.TestBusinessLogic();
+            return;
+        }
+
         List<Vector> vectors;
         try {
             System.out.println("Reading file " + inputFile + "...");
@@ -30,7 +37,8 @@ public class Main {
         output.add(outSummary(vectors));
 
         printToConsole(output);
-        if(!outputFile.isEmpty())
+
+        if(outputFile != null)
             try
             {
                 FileParser.WriteToFile(outputFile, output);
@@ -39,11 +47,9 @@ public class Main {
             {
                 System.out.println(e.getMessage());
             }
-
-        //UnitTests.TestBusinessLogic();
     }
 
-    
+
     /*==============================*/
     /*Приватные методы вывода данных*/
     /*==============================*/

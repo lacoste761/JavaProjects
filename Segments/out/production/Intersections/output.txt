@@ -1,0 +1,7 @@
+
+VECTORS	[1] = (1.0, 2.0, 3.0)	[2] = (4.0, 5.0, 0.0)
+OCTAHEDRAL NORM	[1].oct = 6.0	[2].oct = 9.0
+SPHERICAL NORM	[1].sph = 3.7416573867739413	[2].sph = 6.4031242374328485
+CUBIC NORM	[1].cub = 3.0	[2].cub = 5.0
+SCALARS	([1]*[1]) = 14.0	([1]*[2]) = 14.0	([2]*[2]) = 41.0
+SUMMARY VECTOR = (5.0, 7.0, 3.0)

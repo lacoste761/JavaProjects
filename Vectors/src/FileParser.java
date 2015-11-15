@@ -101,13 +101,13 @@ public class FileParser {
     }
 
     /*–азбор строки на список целых чисел*/
-    private static List<Integer> parseStringToIntegers(String s)
+    public static List<Integer> parseStringToIntegers(String s)
     {
         String[] parts = s.split(" ");
 
         List<Integer> result = new ArrayList<>();
         for(int i = 0; i < parts.length; i++)
-            if(parts[i] != "")
+            if(!parts[i].isEmpty())
                 result.add(Integer.parseInt(parts[i]));
 
         if(result.size() > 2)
@@ -117,7 +117,7 @@ public class FileParser {
     }
 
     /*–азбор строки на список дес€тичных дробей*/
-    private static List<Double> parseStringToDoubles(String s, int expectedSize)
+    public static List<Double> parseStringToDoubles(String s, int expectedSize)
     {
         String[] parts = s.split(" ");
 
@@ -174,7 +174,7 @@ public class FileParser {
                     "ADVICE: Correct a file content and try again.");
 
         int nVectors = firstStringData.get(0);
-        System.out.println("content.size = " + content.size() + "  " + nVectors);
+
         if(content.size() < nVectors + 1)
             throw new NotEnoughDataException(
                     "Not enough vectors in file.\n" +
